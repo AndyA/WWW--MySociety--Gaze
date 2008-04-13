@@ -236,6 +236,103 @@ sub get_radius_containing_population {
     return shift @radius;
 }
 
+=head2 C<< get_country_bounding_coords >>
+
+Get the bounding box of a country given its ISO country code. Returns a
+four element list containing max_lat, min_lat, max_lon, min_lon.
+
+    my @bb = $gaze->get_country_bounding_coords( 'GB' );
+
+=cut
+
+sub get_country_bounding_coords {
+    my ( $self, $country ) = @_;
+    my @bb = $self->_lines(
+        $self->_request(
+            'get_country_bounding_coords', country => $country
+        )
+    );
+
+    return split /\s+/, shift @bb;
+}
+
+=head2 C<< get_places_near >>
+
+=over
+
+=item C<lat>
+
+WGS84 latitude, in north-positive decimal degrees
+
+=item C<lon>
+
+WGS84 longitude, in east-positive decimal degrees
+
+=item C<distance>
+
+distance in kilometres
+
+=item C<number>
+
+number of persons to calculate circle radius
+
+=item C<maximum>
+
+maximum radius to return (default 150km)
+
+=item C<country>
+
+ISO country code of country to limit results to (optional)
+
+=back
+
+Returns a list of hash references like this:
+
+=over
+
+=item C<Name>
+
+Name of the nearby place.
+
+=item C<Distance>
+
+Distance from the base place.
+
+=item C<Latitude>
+
+Latitude of the nearby place.
+
+=item C<Longitude>
+
+Longitude of the nearby place.
+
+=item C<Country>
+
+Country of the nearby place.
+
+=item C<State>
+
+State of the nearby place (currently US only).
+
+=back
+
+=cut
+
+sub get_places_near {
+    my $self = shift;
+    croak "Need arguments as key, value pairs"
+      unless @_ and ( @_ % 2 == 0 );
+
+    return $self->_csv_to_hashes(
+        $self->_request( 'get_places_near', @_ ),
+        sub {
+            my $rec = shift;
+            $rec->{Distance} ||= 0;
+            return $rec;
+        }
+    );
+}
+
 sub _request {
     my $self = shift;
     croak

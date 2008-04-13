@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 10;
+use Test::More tests => 14;
 use WWW::MySociety::Gaze;
 
 ok my $gaze = WWW::MySociety::Gaze->new, 'new';
@@ -45,4 +45,23 @@ isa_ok $gaze, 'WWW::MySociety::Gaze';
     );
 
     ok $radius > 10 && $radius < 1_000_000, 'radius looks OK';
+}
+
+{
+    my @bb = $gaze->get_country_bounding_coords( 'GB' );
+
+    ok @bb == 4, 'correct number of elements';
+    ok $bb[0] > $bb[1], 'latitude order correct';
+    ok $bb[2] > $bb[3], 'longitude order correct';
+}
+
+{
+    my @places = $gaze->get_places_near(
+        lat      => 54.9880556,
+        lon      => -1.6194444,
+        distance => 20,
+        number   => 1000
+    );
+
+    ok @places > 10, 'got some places';
 }
