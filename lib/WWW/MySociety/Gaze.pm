@@ -15,11 +15,11 @@ WWW::MySociety::Gaze - An interface to MySociety.org's Gazetteer service
 
 =head1 VERSION
 
-This document describes WWW::MySociety::Gaze version v0.2.0
+This document describes WWW::MySociety::Gaze version 0.02
 
 =cut
 
-our $VERSION = 'v0.2.0';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
