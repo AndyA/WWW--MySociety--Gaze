@@ -15,11 +15,11 @@ WWW::MySociety::Gaze - An interface to MySociety.org's Gazetteer service
 
 =head1 VERSION
 
-This document describes WWW::MySociety::Gaze version 0.02
+This document describes WWW::MySociety::Gaze version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -258,6 +258,9 @@ sub get_country_bounding_coords {
 
 =head2 C<< get_places_near >>
 
+Get a list of places near a specific location. Takes a list of name,
+value pairs like this:
+
 =over
 
 =item C<lat>
@@ -408,6 +411,14 @@ L<http://rt.cpan.org>.
 =head1 AUTHOR
 
 Andy Armstrong  C<< <andy@hexten.net> >>
+
+=begin html
+
+<div class="perlads">
+<script type="text/javascript" src="http://adserver.szabgab.com/ads/direct_link.js"></script>
+</div>
+
+=end html
 
 =head1 LICENCE AND COPYRIGHT
 
